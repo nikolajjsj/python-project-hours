@@ -73,6 +73,7 @@ def main():
     # Src: https://developers.google.com/google-apps/calendar/v3/reference/events/list
     start_date = datetime.datetime(
         2021, 2, 1, 00, 00, 00, 0).isoformat() + 'Z'
+    end_date = datetime.datetime.now().isoformat() + 'Z'
 
     for calendar_id in calendar_ids:
         count = 0
@@ -81,6 +82,7 @@ def main():
         eventsResult = service.events().list(
             calendarId=calendar_id,
             timeMin=start_date,
+            timeMax=end_date,
             singleEvents=True).execute()
         events = eventsResult.get('items', [])
         if not events:
