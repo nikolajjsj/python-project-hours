@@ -99,7 +99,7 @@ def main():
                     date_time_end = datetime.datetime.strptime(end, '%Y-%m-%d%H:%M:%S')
                     total_time += int(str(date_time_end-date_time_start).split(':')[0])
         print('Total project days: %d' % (count))
-        print('Total time used on project is %d' % (total_time))
+        print('Total time used on project: %d' % (total_time))
 
 if __name__ == '__main__':
     main()
