@@ -27,8 +27,7 @@ def get_credentials():
     If nothing has been stored, or if the stored credentials are invalid,
     the OAuth2 flow is completed to obtain the new credentials.
 
-    Returns:
-        Credentials, the obtained credential.
+    Returns: Credentials, the obtained credential.
     """
     credential_dir = os.path.join(os.path.expanduser('~'))
     if not os.path.exists(credential_dir):
@@ -42,10 +41,11 @@ def get_credentials():
         flow.user_agent = APPLICATION_NAME
         if flags:
             credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatibility with Python 2.6
+        else:  # Needed only for compatibility with Python 2.6
             credentials = tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
+
 
 def main():
     """Shows basic usage of the Google Calendar API.
@@ -79,12 +79,12 @@ def main():
         count = 0
         total_time = 0
         print('\n----%s:\n' % calendar_id)
-        eventsResult = service.events().list(
+        eventsresult = service.events().list(
             calendarId=calendar_id,
             timeMin=start_date,
             timeMax=end_date,
             singleEvents=True).execute()
-        events = eventsResult.get('items', [])
+        events = eventsresult.get('items', [])
         if not events:
             print('No upcoming events found.')
         for event in events:
@@ -92,14 +92,15 @@ def main():
                 if 'Python Projekt' in event['summary']:
                     count += 1
                     start = event['start'].get(
-                        'dateTime', event['start'].get('date')).replace('T','').split('+')[0]
+                        'dateTime', event['start'].get('date')).replace('T', '').split('+')[0]
                     end = event['end'].get(
-                        'dateTime', event['end'].get('date')).replace('T','').split('+')[0]
+                        'dateTime', event['end'].get('date')).replace('T', '').split('+')[0]
                     date_time_start = datetime.datetime.strptime(start, '%Y-%m-%d%H:%M:%S')
                     date_time_end = datetime.datetime.strptime(end, '%Y-%m-%d%H:%M:%S')
                     total_time += int(str(date_time_end-date_time_start).split(':')[0])
-        print('Total project days: %d' % (count))
-        print('Total hours used on project: %d' % (total_time))
+        print('Total project days: %d' % count)
+        print('Total hours used on project: %d' % total_time)
+
 
 if __name__ == '__main__':
     main()
